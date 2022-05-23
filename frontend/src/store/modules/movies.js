@@ -1,3 +1,4 @@
+import drf from '@/api/drf'
 import router from '@/router'
 import axios from 'axios'
 // import drf from '@/api/drf'
@@ -21,11 +22,10 @@ export default {
   actions: {
     fetchMovies({ commit }) {
       axios({
-        url: 'http://localhost:8000/api/v1/movies/',
+        url: drf.movies.default_recom(),
         method: 'get',
       })
-      .then(res => { commit('SET_MOVIES', res.data)
-      console.log(res.data)})
+      .then(res => commit('SET_MOVIES', res.data))
       .catch(err => console.error(err.response))
     },
     fetchMovie({ commit }, moviePk) {

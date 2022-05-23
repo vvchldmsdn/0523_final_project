@@ -10,7 +10,7 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import MovieInfo from '@/components/MovieInfo.vue'
 import RelatedRecommend from '@/components/RelatedRecommend.vue'
 import MovieComment from '@/components/MovieComment.vue'
@@ -25,15 +25,15 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters(['movie'])
+    ...mapGetters(['movie'])
   },
   methods: {
-    // ...mapActions(['fetchMovie'])
+    ...mapActions(['fetchMovie'])
   },
-  // created() {
-  //   const moviePk = this.$route.params.moviePk
-  //   this.fetchMovie(moviePk)
-  // }
+  created() {
+    const moviePk = this.$route.params.moviePk
+    this.fetchMovie(moviePk)
+  }
 }
 </script>
 

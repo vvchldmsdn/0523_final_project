@@ -7,9 +7,9 @@ import ArticleList from '@/views/ArticleList.vue'
 import ArticleDetail from '@/views/ArticleDetail.vue'
 
 import LoginView from '@/views/LoginView.vue'
+import LogoutView from '@/views/LogoutView.vue'
 import SignUp from '@/views/SignUp.vue'
 import ProfileDetail from '@/views/ProfileDetail.vue'
-import MovieList from '@/views/MovieList.vue'
 import MovieDetail from '@/views/MovieDetail.vue'
 import NotFound404 from '@/views/NotFound404.vue'
 
@@ -46,6 +46,11 @@ const routes = [
     component: LoginView
   },
   {
+    path: '/logout',
+    name: 'logout',
+    component: LogoutView
+  },
+  {
     path: '/signup',
     name: 'signup',
     component: SignUp
@@ -64,11 +69,6 @@ const routes = [
     path: '/articles/:articlePk',
     name: 'article',
     component: ArticleDetail
-  },
-  {
-    path: '/movies/',
-    name: 'movies',
-    component: MovieList
   },
   {
     path: '/movies/:moviePk',

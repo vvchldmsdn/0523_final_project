@@ -1,23 +1,44 @@
 <template>
   <nav>
+    <ul>
+      <li>
+        <router-link :to="{ name: 'articles' }">Home</router-link>
+      </li>
 
-  <router-link :to="{ name: 'movies' }">영화목록</router-link> |
+      <li v-if="!isLoggedIn">
+        <router-link :to="{ name: 'login' }">Login</router-link>
+      </li>
+      <li v-if="!isLoggedIn">
+        <router-link :to="{ name: 'signup' }">Signup</router-link>
+      </li>
 
-  <router-link :to="{ name: 'login' }">로그인</router-link> |
-
-  <router-link :to="{ name: 'signup' }">회원가입</router-link> |
-
-  <router-link :to="{ name: 'articles' }">articles</router-link>
-
+      <!-- <li v-if="isLoggedIn">
+        <router-link :to="{ name: 'articleNew' }">New</router-link>
+      </li> -->
+      <li v-if="isLoggedIn">
+        <router-link :to="{ name: 'profile', params: { username } }">
+          {{ currentUser.username }}'s page
+        </router-link>
+      </li>
+      <li v-if="isLoggedIn">
+        <router-link :to="{ name: 'logout' }">Logout</router-link>
+      </li>
+    </ul>
   </nav>
 </template>
 
 <script>
-export default {
-  name: 'NavBar',
-}
+  import { mapGetters } from 'vuex'
+
+  export default {
+    name: 'NavBar',
+    computed: {
+      ...mapGetters(['isLoggedIn', 'currentUser']),
+      username() {
+        return this.currentUser.username ? this.currentUser.username : 'guest'
+      },
+    },
+  }
 </script>
 
-<style>
-
-</style>
+<style></style>
