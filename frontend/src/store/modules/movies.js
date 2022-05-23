@@ -9,15 +9,18 @@ export default {
   state: {
     movies: [],
     movie: {},
+    fantasy_movies: [],
   },
   getters: {
     movies: state => state.movies,
     movie: state => state.movie,
+    fantasy_movies: state => state.fantasy_movies,
   },
   mutations: {
     SET_MOVIES: (state, movies) => state.movies = movies,
     SET_MOVIE: (state, movie) => state.movie = movie,
-    SET_MOVIE_COMMENTS: (state, movie_comments) => (state.movie.movie_comments = movie_comments)
+    SET_MOVIE_COMMENTS: (state, movie_comments) => (state.movie.movie_comments = movie_comments),
+    SET_FANTASY_MOVIES: (state, fantasy_movies) => state.fantasy_movies = fantasy_movies
   },
   actions: {
     fetchMovies({ commit }) {
@@ -30,7 +33,7 @@ export default {
     },
     fetchMovie({ commit }, moviePk) {
       axios({
-        url: `http://localhost:8000/api/v1/movies/${moviePk}`,
+        url: drf.movies.related_recom(moviePk),
         method: 'get',
       })
         .then(res => commit('SET_MOVIE', res.data))
@@ -40,6 +43,19 @@ export default {
             router.push({ name: 'NotFound404' })
           }
         })
+    },
+    fetchFantasyMovies({ commit }) {
+      axios({
+        url: drf.movies.genre_recom(14),
+        method: 'get',
+      })
+      .then(res => commit('SET_FANTASY_MOVIES', res.data))
+      .catch(err => {
+        console.error(err.response)
+        if (err.response.data === 404) {
+          router.push({ name: 'NotFound404' })
+        }
+      })
     },
     // createMovieComment({ commit, getters }, { moviePk, content }) {
     //   const movie_comment = { content }

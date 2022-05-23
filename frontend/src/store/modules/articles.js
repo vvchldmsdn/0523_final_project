@@ -22,53 +22,53 @@ export default {
   },
 
   mutations: {
-    // SET_ARTICLES: (state, articles) => state.articles = article,
-    // SET_ARTICLE: (state, article) => state.article = article,
-    // SET_ARTICLE_COMMENTS: (state, comments) => (state.article.comments = comments),
+    SET_ARTICLES: (state, articles) => state.articles = articles,
+    SET_ARTICLE: (state, article) => state.article = article,
+    SET_ARTICLE_COMMENTS: (state, comments) => (state.article.comments = comments),
   },
 
   actions: {
     // 게시글 목록 가져오기
-    // fetchArticles({ commit, getters }) {
-    //   axios({
-    //     url: drf.articles.articles(),
-    //     method: 'get',
-    //     headers: getters.authHeader,
-    //   })
-    //     .then(res => commit('SET_ARTICLES', res.data))
-    //     .catch(err => console.error(err.response))
-    // },
-    // // 단일 게시글 가져오기
-    // fetchArticle({ commit, getters }, articlePk) {
-    //   axios({
-    //     url: drf.articles.article(articlePk),
-    //     method: 'get',
-    //     headers: getters.authHeader,
-    //   })
-    //     .then(res => commit('SET_ARTICLE', res.data))
-    //     .catch(err => {
-    //       console.error(err.response)
-    //       if (err.response.status === 404) {
-    //         router.push({ name: 'NotFound404' })
-    //       }
-    //     })
-    // },
-    // // 게시글 생성
-    // createArticle({ commit, getters}, article) {
-    //   axios({
-    //     url: drf.articles.create_article(),
-    //     method: 'post',
-    //     data: article,
-    //     headers: getters.authHeader, 
-    //   })
-    //     .then(res => {
-    //       commit('SET_ARTICLE', res.data)
-    //       router.push({
-    //         name: 'article',
-    //         params: { articlePk: getters.article.pk }
-    //       })
-    //     })
-    // },
+    fetchArticles({ commit, getters }) {
+      axios({
+        url: drf.articles.articles(),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+        .then(res => commit('SET_ARTICLES', res.data))
+        .catch(err => console.error(err.response))
+    },
+    // 단일 게시글 가져오기
+    fetchArticle({ commit, getters }, articlePk) {
+      axios({
+        url: drf.articles.article(articlePk),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+        .then(res => commit('SET_ARTICLE', res.data))
+        .catch(err => {
+          console.error(err.response)
+          if (err.response.status === 404) {
+            router.push({ name: 'NotFound404' })
+          }
+        })
+    },
+    // 게시글 생성
+    createArticle({ commit, getters}, article) {
+      axios({
+        url: drf.articles.create_article(),
+        method: 'post',
+        data: article,
+        headers: getters.authHeader, 
+      })
+        .then(res => {
+          commit('SET_ARTICLE', res.data)
+          router.push({
+            name: 'article',
+            params: { articlePk: getters.article.pk }  // 
+          })
+        })
+    },
     updateArticle({ commit, getters }, { articlePk, title, content} ) {
       axios({
         url: drf.articles.article(articlePk),

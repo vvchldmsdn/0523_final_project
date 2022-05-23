@@ -44,12 +44,14 @@ def recom(request, movie_pk):
 def genre_recom(request, genre_pk):
     result = []
     weighted_ratings = wr_algorithms.weighted_ratings
-    while len(result) <= 20:
-        for id, ratings in weighted_ratings:
-            tmp_movie = get_object_or_404(Movie, pk=id)
-            tmp_serializer = MovieGenreSerializer(tmp_movie)
-            if genre_pk in tmp_serializer.data['genre_ids']:
-                result.append(tmp_serializer.data)
+
+    for id, ratings in weighted_ratings:
+        tmp_movie = get_object_or_404(Movie, pk=id)
+        tmp_serializer = MovieGenreSerializer(tmp_movie)
+        if genre_pk in tmp_serializer.data['genre_ids']:
+            result.append(tmp_serializer.data)
+        if len(result) == 20:
+            break
     return Response(result)
 
 

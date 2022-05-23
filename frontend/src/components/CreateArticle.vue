@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      newArticles: {
+      newArticle: {
         title: this.article.title,
         content: this.article.content,
       }

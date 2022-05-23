@@ -13,10 +13,16 @@ import NavBar from '@/components/NavBar.vue'
 import ProfileView from '@/components/ProfileView.vue'
 import DefaultRecommend from '@/components/DefaultRecommend.vue'
 import GenreRecommend from '@/components/GenreRecommend.vue'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'HomeView',
   components: { ProfileView, DefaultRecommend, GenreRecommend, NavBar },
-
+  computed: {
+    ...mapGetters(['movie',])
+  },
+  methods: {
+    ...mapActions(['fetchMovie',])
+  }
 }
 </script>

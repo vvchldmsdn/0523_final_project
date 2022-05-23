@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Article List</h1>
+    <h1>커뮤니티</h1>
     <ul>
       <li v-for="article in articles" :key="article.pk">
         {{ article.user.username }} :
@@ -10,7 +10,7 @@
         </router-link>
       </li>
     </ul>
-    <create-article></create-article>
+    <create-article :article="article"></create-article>
   </div>
 </template>
 

@@ -5,7 +5,8 @@ app_name = 'articles'
 
 urlpatterns = [
     # articles
-    path('', views.article_list_or_create),
+    path('', views.article_list),
+    path('create/', views.create_article),
     path('<int:article_pk>/', views.article_detail_or_update_or_delete),
     path('<int:article_pk>/like/', views.like_article),
     # comments

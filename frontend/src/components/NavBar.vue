@@ -2,7 +2,7 @@
   <nav>
     <ul>
       <li>
-        <router-link :to="{ name: 'articles' }">Home</router-link>
+        <router-link :to="{ name: 'articles' }">커뮤니티</router-link>
       </li>
 
       <li v-if="!isLoggedIn">

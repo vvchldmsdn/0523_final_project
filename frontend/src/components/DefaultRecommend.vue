@@ -3,7 +3,10 @@
     <h1>Movies</h1>
     <ul>
       <li v-for="movie in movies" :key="movie.id">
-          {{ movie }}
+          {{ movie.title }} :
+          <router-link :to="{ name: 'movie', params: {moviePk: movie.id} }">
+            To Detail
+          </router-link>
       </li>
     </ul>
   </div>
@@ -20,6 +23,9 @@ export default {
   methods: {
     ...mapActions(['fetchMovies'])
   },
+  created() {
+    this.fetchMovies()
+  }
 }
 </script>
 

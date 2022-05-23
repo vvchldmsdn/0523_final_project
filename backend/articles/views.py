@@ -1,5 +1,6 @@
 # articles/views.py
 
+from dis import dis
 from django.shortcuts import get_object_or_404
 from django.db.models import Count
 
@@ -11,28 +12,24 @@ from .serializers.article import ArticleListSerializer, ArticleSerializer
 from .serializers.comment import CommentSerializer
 
 
-@api_view(['GET', 'POST'])
-def article_list_or_create(request):
-
-    def article_list():
-        # comment 개수 추가
+@api_view(['GET'])
+def article_list(request):
+    if request.method == 'GET':
         articles = Article.objects.annotate(
             comment_count=Count('comments', distinct=True),
             like_count=Count('like_users', distinct=True)
         ).order_by('-pk')
         serializer = ArticleListSerializer(articles, many=True)
         return Response(serializer.data)
-    
-    def create_article():
+
+
+@api_view(['POST'])
+def create_article(request):
+    if request.method == 'POST':
         serializer = ArticleSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    if request.method == 'GET':
-        return article_list()
-    elif request.method == 'POST':
-        return create_article()
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
