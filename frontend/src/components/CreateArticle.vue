@@ -3,11 +3,11 @@
     글 작성하기
     <form @submit.prevent="onSubmit">
       <div>
-        <label for="title">제목: </label>
+        <label for="title">title: </label>
         <input v-model="newArticle.title" type="text" id="title" />
       </div>
       <div>
-        <label for="content">내용: </label>
+        <label for="content">content: </label>
         <textarea v-model="newArticle.content" type="text" id="content"></textarea>
       </div>
       <div>

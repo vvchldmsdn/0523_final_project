@@ -54,7 +54,7 @@ export default {
         })
     },
     // 게시글 생성
-    createArticle({ commit, getters}, article) {
+    createArticle({ commit, getters }, article) {
       axios({
         url: drf.articles.create_article(),
         method: 'post',
@@ -69,7 +69,7 @@ export default {
           })
         })
     },
-    updateArticle({ commit, getters }, { articlePk, title, content} ) {
+    updateArticle({ commit, getters }, { articlePk, title, content } ) {
       axios({
         url: drf.articles.article(articlePk),
         method: 'put',
@@ -98,6 +98,15 @@ export default {
           })
           .catch(err => console.error(err.response))
       }
+    },
+    likeArticle({ commit, getters }, articlePk) {
+      axios({
+        url: drf.articles.like_article(articlePk),
+        method: 'post',
+        headers: getters.authHeader,
+      })
+        .then(res => commit('SET_ARTICLE', res.data))
+        .catch(err => console.error(err.response))
     },
 
     createComment({ commit, getters }, { articlePk, content }) {

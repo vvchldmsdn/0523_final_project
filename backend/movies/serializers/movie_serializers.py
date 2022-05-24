@@ -1,13 +1,33 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from ..models import Movie, Actor, Director
+from ..models import Movie, Actor, Director, Genre
 from .comment_serializers import CommentSerializer
 
 
 User = get_user_model()
 
 class MovieSerializer(serializers.ModelSerializer):
+    class ActorNameSerializer(serializers.ModelSerializer):
 
+        class Meta:
+            model = Actor
+            fields = ('name',)
+
+    class DirectorNameSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Director
+            fields = ('name',)
+    
+    class GenreNameSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Genre
+            fields = ('name',)
+
+    actor_ids = ActorNameSerializer(many=True, read_only=True)
+    director_ids = DirectorNameSerializer(many=True, read_only=True)
+    genre_ids = GenreNameSerializer(many=True, read_only=True)
     movie_comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:

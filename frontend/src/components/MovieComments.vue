@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ movieComments }}
     <ul>
       <movie-comment
         v-for="movieComment in movieComments"

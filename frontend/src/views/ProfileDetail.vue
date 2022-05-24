@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>Profile Detail</h1>
+    <h1>{{ profile.username }}'s 페이지</h1>
+    <profile-info></profile-info>
     <user-article-list></user-article-list>
     <user-interest></user-interest>
-    <profile-info></profile-info>
   </div>
 </template>
 

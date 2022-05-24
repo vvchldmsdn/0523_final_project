@@ -5,6 +5,7 @@ import HomeView from '@/views/HomeView.vue'
 
 import ArticleList from '@/views/ArticleList.vue'
 import ArticleDetail from '@/views/ArticleDetail.vue'
+import ArticleUpdate from '@/views/ArticleUpdate.vue'
 
 import LoginView from '@/views/LoginView.vue'
 import LogoutView from '@/views/LogoutView.vue'
@@ -12,6 +13,7 @@ import SignUp from '@/views/SignUp.vue'
 import ProfileDetail from '@/views/ProfileDetail.vue'
 import MovieDetail from '@/views/MovieDetail.vue'
 import NotFound404 from '@/views/NotFound404.vue'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -71,6 +73,11 @@ const routes = [
     component: ArticleDetail
   },
   {
+    path: '/articles/:articlePk/update',
+    name: 'articleUpdate',
+    component: ArticleUpdate
+  },
+  {
     path: '/movies/:moviePk',
     name: 'movie',
     component: MovieDetail
@@ -92,9 +99,25 @@ const router = new VueRouter({
   routes
 })
 
-// Navigation Guard 설정 부분!
-// router.beforeEach((to, from, next) => {
-  
-// })
+router.beforeEach((to, from, next) => {
+  store.commit('SET_AUTH_ERROR', null)
+
+  const { isLoggedIn } = store.getters
+
+  const noAuthPages = ['login', 'signup']
+
+  const isAuthRequired = !noAuthPages.includes(to.name)
+
+  if (isAuthRequired && !isLoggedIn) {
+    alert('Require Login! Redirecting..')
+    next({ name: 'login' })
+  } else {
+    next()
+  }
+
+  if (!isAuthRequired && isLoggedIn) {
+    next({ name: 'home' })
+  }
+})
 
 export default router

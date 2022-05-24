@@ -3,10 +3,11 @@
     <router-link :to="{ name: 'profile', params: { username: movieComment.user.username } }">
       {{ movieComment.user.username }}
     </router-link>
-    <span v-if="!isEditing">{{ payload.content }}</span>
+    
+    <span v-if="!isEditing">{{ payload.movieCommentContent }}</span>
 
     <span v-if="isEditing">
-      <input type="text" v-model="payload.content">
+      <input type="text" v-model="payload.movieCommentContent">
       <button @click="onUpdate">수정</button>
       <button @click="switchIsEditing">취소</button>
     </span>
@@ -31,7 +32,7 @@ export default {
       payload: {
         moviePk: this.movieComment.movie,
         movieCommentPk: this.movieComment.pk,
-        content: this.movieComment.content
+        movieCommentContent: this.movieCommentContent.content
       },
     }
   },

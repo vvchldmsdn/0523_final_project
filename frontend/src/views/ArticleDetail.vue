@@ -1,21 +1,34 @@
 <template>
   <div>
-    <h1>Article Detail</h1>
-    <update-article :article="article"></update-article>
+    <h1>{{ article.title }}</h1>
+    <p>
+      {{ article.content}}
+    </p>
+    
+    <div v-if="isAuthor">
+      <router-link :to="{ name: 'articleUpdate', params: { articlePk } }">
+        <button>Edit</button>
+      </router-link>
+      |
+      <button @click="deleteArticle(articlePk)">Delete</button>
+    </div>
+
+    <div>
+      Like:
+      <button @click="likeArticle(articlePk)">{{ likeCount }}</button>
+    </div>
+
     <comment-list :comments="article.comments"></comment-list>
-    <create-comment></create-comment>
   </div>
 </template>
 
 <script>
-import UpdateArticle from '@/components/UpdateArticle.vue'
 import CommentList from '@/components/CommentList.vue'
-import CreateComment from '@/components/CreateComment.vue'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'ArticleDetail',
-  components: { UpdateArticle, CommentList, CreateComment },
+  components: { CommentList },
   data() {
     return {
       articlePk: this.$route.params.articlePk,
@@ -23,6 +36,9 @@ export default {
   },
   computed: {
     ...mapGetters(['isAuthor', 'article']),
+    likeCount() {
+      return this.article.like_users?.length
+    }
   },
   methods: {
     ...mapActions(['fetchArticle', 'likeArticle', 'deleteArticle',])

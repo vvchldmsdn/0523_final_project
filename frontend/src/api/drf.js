@@ -19,6 +19,7 @@ export default {
   articles: {
     articles: () => HOST + ARTICLES,
     article: articlePk => HOST + ARTICLES + `${articlePk}/`, 
+    like_article: articlePk => HOST + ARTICLES + `${articlePk}/like/`, 
     create_article: () => HOST + ARTICLES + 'create/',
     comments: articlePk => HOST + ARTICLES + `${articlePk}/` + COMMENTS,
     comment: (articlePk, commentPk) => HOST + ARTICLES + `${articlePk}/` + COMMENTS + `${commentPk}/`,
@@ -30,7 +31,7 @@ export default {
     movie_detail: moviePk => HOST + MOVIES + `${moviePk}/`,
     default_recom: () => HOST + MOVIES + 'default/',
     user_interest: (languagePk) => HOST + MOVIES + 'interest/' + `${languagePk}/`,
-    movie_comments: moviePk => HOST + MOVIES + `${moviePk}/` + COMMENTS,
+    movie_comments: moviePk => HOST + MOVIES + `${moviePk}/` + COMMENTS + 'create/',
     movie_comment: (moviePk, movieCommentPk) => HOST + MOVIES + `${moviePk}/` + COMMENTS + `${movieCommentPk}/`,
   },
 }
