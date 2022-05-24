@@ -15,7 +15,7 @@ export default {
   name: 'CreateMovieComment',
   data() {
     return {
-      movieCommentContent: ''
+      content: null,
     }
   },
   computed: {
@@ -24,8 +24,9 @@ export default {
   methods: {
     ...mapActions(['createMovieComment']),
     onSubmit() {
-      this.createMovieComment({ moviePk: this.movie.pk, movieCommentContent: this.movieCommentContent, })
-      this.movieCommentContent = ''
+      // console.log(this.content)
+      this.createMovieComment({ moviePk: this.movie.id, content: this.content, })
+      this.content = ''
     }
   }
 }

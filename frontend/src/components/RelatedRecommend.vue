@@ -6,8 +6,8 @@
         <div class="card h-100">
           <img :src="'https://image.tmdb.org/t/p/original' + rel_movie.poster_path" class="card-img-top" alt="img">
           <div class="card-body">
-            <h5 lass="card-title">{{rel_movie.title }}</h5>
-            <p class="card-text">{{rel_movie.overview }}</p>
+            <h5 lass="card-title">{{ rel_movie.title }}</h5>
+            <p class="card-text">{{ rel_movie.overview }}</p>
           </div>
         </div>
       </div>

@@ -3,8 +3,8 @@
     <nav-bar></nav-bar>
     <h1>Home</h1>
     <profile-view></profile-view>
-    <default-recommend></default-recommend>
-    <genre-recommend></genre-recommend>
+    <default-recommend class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"></default-recommend>
+    <genre-recommend class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"></genre-recommend>
   </div>
 </template>
 

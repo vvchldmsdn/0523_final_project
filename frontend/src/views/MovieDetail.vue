@@ -1,10 +1,9 @@
 <template>
   <div>
     <h1>{{ movie.title }}</h1>
-
     <movie-info :movie="movie"></movie-info>
     <related-recommend class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"></related-recommend>
-    <movie-comments :movieComments="movie.movieComments"></movie-comments>
+    <movie-comments :movieComments="movie.movie_comments"></movie-comments>
   </div>
 </template>
 

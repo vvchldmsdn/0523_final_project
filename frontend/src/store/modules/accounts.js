@@ -22,6 +22,7 @@ export default {
     authError: state => state.authError,
     authHeader: state => ({ Authorization: `Token ${state.token}`})
   },
+
   mutations: {
     SET_TOKEN: (state, token) => state.token = token,
     SET_CURRENT_USER: (state, user) => state.currentUser = user,
@@ -108,6 +109,7 @@ export default {
           })
       }
     },
+    
     fetchProfile({ commit, getters }, { username }) {
       axios({
         url: drf.accounts.profile(username),

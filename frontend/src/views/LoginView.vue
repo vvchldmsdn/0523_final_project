@@ -2,7 +2,7 @@
   <div>
     <h1>로그인</h1>
 
-    <account-error-list></account-error-list>
+    <account-error-list v-if="authError"></account-error-list>
     
     <form @submit.prevent="login(credentials)">
       <div>

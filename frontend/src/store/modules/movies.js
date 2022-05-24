@@ -10,12 +10,16 @@ export default {
     movies: [],
     movie: {},
     fantasy_movies: [],
+    animations_movies: [],
+    sf_movies: [],
     related_movies: [],
   },
   getters: {
     movies: state => state.movies,
     movie: state => state.movie,
     fantasy_movies: state => state.fantasy_movies,
+    animation_movies: state => state.fantasy_movies,
+    sf_movies: state => state.sf_movies,
     related_movies: state => state.related_movies,
     isAuthor: (state, getters) => {
       return state.movieComment.user?.username === getters.currentUser.username
@@ -26,7 +30,9 @@ export default {
     SET_MOVIE: (state, movie) => state.movie = movie,
     SET_MOVIE_COMMENTS: (state, movie_comments) => (state.movie.movie_comments = movie_comments),
     SET_RELATED_MOVIES: (state, related_movies) => state.related_movies = related_movies,
-    SET_FANTASY_MOVIES: (state, fantasy_movies) => state.fantasy_movies = fantasy_movies
+    SET_FANTASY_MOVIES: (state, fantasy_movies) => state.fantasy_movies = fantasy_movies,
+    SET_ANIMATION_MOVIES: (state, animation_movies) => state.animation_movies = animation_movies,
+    SET_SF_MOVIES: (state, sf_movies) => state.sf_movies = sf_movies,
   },
   actions: {
     fetchMovies({ commit }) {
@@ -78,13 +84,42 @@ export default {
         }
       })
     },
-    createMovieComment({ commit, getters }, { moviePk, movieCommentContent }) {
-      const movie_comment = { movieCommentContent }
+
+    fetchAnimationMovies({ commit }) {
+      axios({
+        url: drf.movies.genre_recom(16),
+        method: 'get',
+      })
+      .then(res => commit('SET_ANIMATION_MOVIES', res.data))
+      .catch(err => {
+        console.error(err.response)
+        if (err.response.status === 404) {
+          router.push({ name: 'NotFound404' })
+        }
+      })
+    },
+
+    fetchSfMovies({ commit }) {
+      axios({
+        url: drf.movies.genre_recom(878),
+        method: 'get',
+      })
+      .then(res => commit('SET_SF_MOVIES', res.data))
+      .catch(err => {
+        console.error(err.response)
+        if (err.response.status === 404) {
+          router.push({ name: 'NotFound404' })
+        }
+      })
+    },
+
+    createMovieComment({ commit, getters }, { moviePk, content }) {
+      // const movie_comment = { movieCommentContent }
 
       axios({
         url: drf.movies.movie_comments(moviePk),
         method: 'post',
-        data: movie_comment,
+        data: { 'content': content},
         headers: getters.authHeader,
       })
         .then(res => {
@@ -93,8 +128,8 @@ export default {
         .catch(err => console.error(err.response))
     },
 
-    updateMovieComment({ commit, getters }, { moviePk, movieCommentPk, movieCommentContent }) {
-      const movie_comment = { movieCommentContent }
+    updateMovieComment({ commit, getters }, { moviePk, movieCommentPk, content }) {
+      const movie_comment = { content }
 
       axios({
         url: drf.movies.movie_comment(moviePk, movieCommentPk),
@@ -117,6 +152,7 @@ export default {
           headers: getters.authHeader,
         })
           .then(res => {
+            console.log('완료')
             commit('SET_MOVIE_COMMENTS', res.data)
           })
           .catch(err => console.error(err.response))

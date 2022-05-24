@@ -95,6 +95,7 @@ def user_interest(request, language_pk):
 # @authentication_classes([JSONWebTokenAuthentication])
 # @permission_classes([IsAuthenticated])
 def create_comment(request, movie_pk):
+    print(request.data)
     user = request.user
     movie = get_object_or_404(Movie, pk=movie_pk)
     serializer = CommentSerializer(data=request.data)
@@ -117,14 +118,14 @@ def comment_update_or_delete(request, movie_pk, comment_pk):
             serializer = CommentSerializer(instance=comment, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                comments = movie.comments.all()
+                comments = movie.movie_comments.all()
                 serializer = CommentSerializer(comments, many=True)
                 return Response(serializer.data)
 
     def delete_comment():
         if request.user == comment.user:
             comment.delete()
-            comments = movie.comments.all()
+            comments = movie.movie_comments.all()
             serializer = CommentSerializer(comments, many=True)
             return Response(serializer.data)
     
