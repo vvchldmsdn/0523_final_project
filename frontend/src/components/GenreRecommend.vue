@@ -7,6 +7,9 @@
             <img :src="'https://image.tmdb.org/t/p/original' + movie.poster_path" class="card-img-top" alt="img">
             <div class="card-body">
               <h5 lass="card-title">{{ movie.title }}</h5>
+              <router-link :to="{ name: 'movie', params: {moviePk: movie.id} }">
+                To Detail
+              </router-link>
             </div>
           </div>
         </div>

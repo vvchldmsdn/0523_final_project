@@ -7,11 +7,11 @@
     {{ movie.director_ids[0]['name']}}<br>
     출연 : 
     <span v-for="actor in movie.actor_ids" :key="actor.name">
-      {{ actor.name }}
+      {{ actor.name }} 
     </span><br>
     장르 : 
     <span v-for="genre in movie.genre_ids" :key="genre.name">
-      {{ genre.name }}   
+      {{ genre.name }} 
     </span><br>
 
 
