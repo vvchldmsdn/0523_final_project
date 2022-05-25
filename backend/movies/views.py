@@ -3,6 +3,7 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .serializers.movie_serializers import MovieSerializer, MovieCosSerializer, MovieGenreSerializer, MovieLanguageSerializer
 from .serializers.genre_serializers import GenreSerializer
 from .serializers.comment_serializers import CommentSerializer
+from .serializers.rate_serializers import RateSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
@@ -133,3 +134,31 @@ def comment_update_or_delete(request, movie_pk, comment_pk):
         return update_comment()
     elif request.method == 'DELETE':
         return delete_comment()
+
+
+@api_view(['GET', 'POST'])
+def rate_list_create(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+
+    def rate_list():
+        result = dict()
+        ratings = movie.ratings.all()
+        serializer = RateSerializer(ratings, many=True)
+        total_len = len(serializer.data)
+        sum_rates = 0
+        for info in serializer.data:
+            sum_rates += info['rates']
+        average_rates = round(sum_rates / total_len, 2)
+        result['rate_average'] = average_rates
+        return Response(result)
+
+    def rate_create():
+        serializer = RateSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user, movie=movie)
+            return Response(serializer.data)
+
+    if request.method == 'GET':
+        return rate_list()
+    elif request.method == 'POST':
+        return rate_create()

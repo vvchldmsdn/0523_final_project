@@ -13,6 +13,7 @@ export default {
     animations_movies: [],
     sf_movies: [],
     related_movies: [],
+    rate_average: {},
   },
   getters: {
     movies: state => state.movies,
@@ -24,6 +25,7 @@ export default {
     isAuthor: (state, getters) => {
       return state.movieComment.user?.username === getters.currentUser.username
     },
+    rate_average: state => state.rate_average,
   },
   mutations: {
     SET_MOVIES: (state, movies) => state.movies = movies,
@@ -33,6 +35,8 @@ export default {
     SET_FANTASY_MOVIES: (state, fantasy_movies) => state.fantasy_movies = fantasy_movies,
     SET_ANIMATION_MOVIES: (state, animation_movies) => state.animation_movies = animation_movies,
     SET_SF_MOVIES: (state, sf_movies) => state.sf_movies = sf_movies,
+    SET_RATE_AVERAGE: (state, rate_average) => state.rate_average = rate_average,
+    SET_MOVIE_RATE: (state, movie_rate) => (state.movie.ratings = movie_rate),
   },
   actions: {
     fetchMovies({ commit }) {
@@ -157,6 +161,36 @@ export default {
           })
           .catch(err => console.error(err.response))
       }
+    },
+
+    fetchRate({ commit, getters }, moviePk) {
+      axios({
+        url: drf.movies.movie_rate(moviePk),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+      .then(res => {
+        commit('SET_RATE_AVERAGE', res.data)
+      })
+      .catch(err => {
+        console.error(err.response)
+        if (err.response.status === 404) {
+          router.path({name: 'NotFound404'})
+        }
+      })
+    },
+
+    createMovieRate({ commit, getters }, { moviePk, rates }) {
+      axios({
+        url: drf.movies.movie_rate(moviePk),
+        method: 'post',
+        data: {'rates': rates},
+        headers: getters.authHeader,
+      })
+      .then(res => {
+        commit('SET_MOVIE_RATE', res.data)
+      })
+      .catch(err => console.error(err.response))
     },
   }
 }

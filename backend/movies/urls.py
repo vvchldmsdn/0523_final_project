@@ -26,5 +26,7 @@ urlpatterns = [
     path('<int:movie_pk>/comments/create/', views.create_comment),
 
     path('<int:movie_pk>/comments/<int:comment_pk>/', views.comment_update_or_delete),
+
+    path('<int:movie_pk>/rate/', views.rate_list_create),
 ]
 

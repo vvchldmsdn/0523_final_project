@@ -33,5 +33,6 @@ export default {
     user_interest: (languagePk) => HOST + MOVIES + 'interest/' + `${languagePk}/`,
     movie_comments: moviePk => HOST + MOVIES + `${moviePk}/` + COMMENTS + 'create/',
     movie_comment: (moviePk, movieCommentPk) => HOST + MOVIES + `${moviePk}/` + COMMENTS + `${movieCommentPk}/`,
+    movie_rate: moviePk => HOST + MOVIES + `${moviePk}/` + 'rate/',
   },
 }
