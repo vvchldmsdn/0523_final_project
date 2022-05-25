@@ -1,4 +1,4 @@
-from .models import Movie, Genre, Comment
+from .models import Movie, Genre, Comment, Rating
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .serializers.movie_serializers import MovieSerializer, MovieCosSerializer, MovieGenreSerializer, MovieLanguageSerializer
 from .serializers.genre_serializers import GenreSerializer
@@ -148,8 +148,11 @@ def rate_list_create(request, movie_pk):
         sum_rates = 0
         for info in serializer.data:
             sum_rates += info['rates']
-        average_rates = round(sum_rates / total_len, 2)
-        result['rate_average'] = average_rates
+        if total_len:
+            average_rates = round(sum_rates / total_len, 2)
+            result['rate_average'] = average_rates
+        else:
+            result['rate_average'] = '아직 평점이 없습니다ㅠㅠ'
         return Response(result)
 
     def rate_create():
@@ -162,3 +165,40 @@ def rate_list_create(request, movie_pk):
         return rate_list()
     elif request.method == 'POST':
         return rate_create()
+
+
+# @api_view(['PUT', 'DELETE'])
+# def rate_update_delete(request, movie_pk):
+#     movie = get_object_or_404(Movie, pk=movie_pk)
+
+#     def rate_update():
+#         rating = movie.
+
+
+@api_view(['GET'])
+def rated_check(request, movie_pk):  # 영화에 평점 줬으면 True, 아니면 False넣어서 응답
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    ratings = movie.ratings.all()
+    serializer = RateSerializer(ratings, many=True)
+    rating_data = serializer.data
+
+    result = {'check': False}
+    for info in rating_data:
+        if request.user.id == info['user']:
+            result['check'] = True
+            break
+    return Response(result)
+
+
+@api_view(['GET'])
+def test(request):
+    result = {'like_movies': []}
+    rating = request.user.ratings.all()
+    serializer = RateSerializer(rating, many=True)
+    rating_infos = serializer.data
+
+    for info in rating_infos:
+        if info['rates'] >= 7:
+            result['like_movies'].append(info['movie'])
+
+    return Response(result)

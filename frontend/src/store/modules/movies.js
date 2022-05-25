@@ -14,6 +14,7 @@ export default {
     sf_movies: [],
     related_movies: [],
     rate_average: {},
+    rate_check: {},
   },
   getters: {
     movies: state => state.movies,
@@ -26,6 +27,7 @@ export default {
       return state.movieComment.user?.username === getters.currentUser.username
     },
     rate_average: state => state.rate_average,
+    rate_check: state => state.rate_check,
   },
   mutations: {
     SET_MOVIES: (state, movies) => state.movies = movies,
@@ -37,6 +39,7 @@ export default {
     SET_SF_MOVIES: (state, sf_movies) => state.sf_movies = sf_movies,
     SET_RATE_AVERAGE: (state, rate_average) => state.rate_average = rate_average,
     SET_MOVIE_RATE: (state, movie_rate) => (state.movie.ratings = movie_rate),
+    SET_RATE_CHECK: (state, rate_check) => (state.rate_check = rate_check),
   },
   actions: {
     fetchMovies({ commit }) {
@@ -61,6 +64,7 @@ export default {
           }
         })
     },
+    
     fetchRelatedRecom({ commit }, moviePk) {
       axios({
         url: drf.movies.related_recom(moviePk),
@@ -192,5 +196,17 @@ export default {
       })
       .catch(err => console.error(err.response))
     },
+
+    setRateCheck({ commit, getters}, moviePk) {
+      axios({
+        url: drf.movies.rate_check(moviePk),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+      .then(res => {
+        commit('SET_RATE_CHECK', res.data)
+      })
+      .catch(err => {console.error(err.response)})
+    }
   }
 }

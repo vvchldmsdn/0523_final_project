@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+
+from movies.serializers.rate_serializers import RateSerializer
 from ..models import Movie, Actor, Director, Genre
 from .comment_serializers import CommentSerializer
 
@@ -29,6 +31,7 @@ class MovieSerializer(serializers.ModelSerializer):
     director_ids = DirectorNameSerializer(many=True, read_only=True)
     genre_ids = GenreNameSerializer(many=True, read_only=True)
     movie_comments = CommentSerializer(many=True, read_only=True)
+    ratings = RateSerializer(many=True, read_only=True)
 
     class Meta:
         model = Movie

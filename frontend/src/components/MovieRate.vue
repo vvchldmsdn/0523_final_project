@@ -21,6 +21,12 @@ export default {
   },
   created() {
     this.fetchRate(this.moviePk)
+  },
+  mounted() {
+    this.fetchRate(this.moviePk)
+  },
+  watch: {
+    rate_average () {console.log('shit')}
   }
 }
 </script>

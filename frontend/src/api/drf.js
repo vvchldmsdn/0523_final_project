@@ -34,5 +34,6 @@ export default {
     movie_comments: moviePk => HOST + MOVIES + `${moviePk}/` + COMMENTS + 'create/',
     movie_comment: (moviePk, movieCommentPk) => HOST + MOVIES + `${moviePk}/` + COMMENTS + `${movieCommentPk}/`,
     movie_rate: moviePk => HOST + MOVIES + `${moviePk}/` + 'rate/',
+    rate_check: moviePk => HOST + MOVIES + `${moviePk}/` + 'rate/check/',
   },
 }
