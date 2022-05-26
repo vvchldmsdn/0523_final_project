@@ -14,6 +14,7 @@ from .serializers.comment import CommentSerializer
 
 @api_view(['GET'])
 def article_list(request):
+    print(request.user)
     if request.method == 'GET':
         articles = Article.objects.annotate(
             comment_count=Count('comments', distinct=True),
@@ -25,6 +26,7 @@ def article_list(request):
 
 @api_view(['POST'])
 def create_article(request):
+    print(request.user)
     if request.method == 'POST':
         serializer = ArticleSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -34,6 +36,7 @@ def create_article(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def article_detail_or_update_or_delete(request, article_pk):
+    print(request.user)
     article = get_object_or_404(Article, pk=article_pk)
 
     def article_detail():
@@ -78,6 +81,7 @@ def like_article(request, article_pk):
 
 @api_view(['POST'])
 def create_comment(request, article_pk):
+    print(request.user)
     user = request.user
     article = get_object_or_404(Article, pk=article_pk)
     

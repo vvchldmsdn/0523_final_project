@@ -47,7 +47,7 @@ def wrcos(a):  # a는 movie id들이 담겨있는 리스트 / 중복되는 id �
     # print(type(np_arrs[0]), type(np_arrs), len(np_arrs[0]))
     # print(len(target_np_arr), type(target_np_arr))
     for np_arr in np_arrs:
-        if np_arr[0] not in a:
+        if np_arr[0] not in a:  # 이미 평점 8점 이상 준 영화는 안 보이게 함
             similarity = cos_sim(target_np_arr[0][1], np_arr[1])
             result[np_arr[0]] = similarity
 

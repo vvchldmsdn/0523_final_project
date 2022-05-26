@@ -99,6 +99,7 @@ def user_interest(request, language_pk):
 # @permission_classes([IsAuthenticated])
 def create_comment(request, movie_pk):
     print(request.data)
+    print(request.user)
     user = request.user
     movie = get_object_or_404(Movie, pk=movie_pk)
     serializer = CommentSerializer(data=request.data)
@@ -139,6 +140,8 @@ def comment_update_or_delete(request, movie_pk, comment_pk):
 
 
 @api_view(['GET', 'POST'])
+# @authentication_classes([JSONWebTokenAuthentication])
+# @permission_classes([IsAuthenticated])
 def rate_list_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
 
@@ -178,6 +181,8 @@ def rate_list_create(request, movie_pk):
 
 
 @api_view(['GET'])
+# @authentication_classes([JSONWebTokenAuthentication])
+# @permission_classes([IsAuthenticated])
 def rated_check(request, movie_pk):  # 영화에 평점 줬으면 True, 아니면 False넣어서 응답
     movie = get_object_or_404(Movie, pk=movie_pk)
     ratings = movie.ratings.all()
@@ -194,6 +199,8 @@ def rated_check(request, movie_pk):  # 영화에 평점 줬으면 True, 아니�
 
 
 @api_view(['GET'])
+# @authentication_classes([JSONWebTokenAuthentication])
+# @permission_classes([IsAuthenticated])
 def test(request):
     result = {'like_movies': []}
     rating = request.user.ratings.all()
@@ -208,12 +215,12 @@ def test(request):
 
 
 @api_view(['GET'])
+# @authentication_classes([JSONWebTokenAuthentication])
+# @permission_classes([IsAuthenticated])
 def default_recom(request):
-    print(request.user)
     ratings = request.user.ratings.all()
     serializer = RateSerializer(ratings, many=True)
-    print(serializer.data)
-    
+
     high_rate_movies = []
     for info in serializer.data:
         if info['rates'] >= 8:

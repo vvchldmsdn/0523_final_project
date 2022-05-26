@@ -42,19 +42,21 @@ export default {
     SET_RATE_CHECK: (state, rate_check) => (state.rate_check = rate_check),
   },
   actions: {
-    fetchMovies({ commit }) {
+    fetchMovies({ commit, getters }) {
       axios({
         url: drf.movies.default_recom(),
         method: 'get',
+        headers: getters.authHeader,
       })
       .then(res => commit('SET_MOVIES', res.data))
       .catch(err => console.error(err.response))
     },
 
-    fetchMovie({ commit }, moviePk) {
+    fetchMovie({ commit, getters }, moviePk) {
       axios({
         url: drf.movies.movie_detail(moviePk),
         method: 'get',
+        headers: getters.authHeader,
       })
         .then(res => commit('SET_MOVIE', res.data))
         .catch(err => {
@@ -65,10 +67,11 @@ export default {
         })
     },
     
-    fetchRelatedRecom({ commit }, moviePk) {
+    fetchRelatedRecom({ commit, getters }, moviePk) {
       axios({
         url: drf.movies.related_recom(moviePk),
         method: 'get',
+        headers: getters.authHeader,
       })
         .then(res => commit('SET_RELATED_MOVIES', res.data))
         .catch(err => {
@@ -79,10 +82,11 @@ export default {
         })
     },
 
-    fetchFantasyMovies({ commit }) {
+    fetchFantasyMovies({ commit, getters }) {
       axios({
         url: drf.movies.genre_recom(14),
         method: 'get',
+        headers: getters.authHeader,
       })
       .then(res => commit('SET_FANTASY_MOVIES', res.data))
       .catch(err => {
@@ -93,10 +97,11 @@ export default {
       })
     },
 
-    fetchAnimationMovies({ commit }) {
+    fetchAnimationMovies({ commit, getters }) {
       axios({
         url: drf.movies.genre_recom(16),
         method: 'get',
+        headers: getters.authHeader,
       })
       .then(res => commit('SET_ANIMATION_MOVIES', res.data))
       .catch(err => {
@@ -107,10 +112,11 @@ export default {
       })
     },
 
-    fetchSfMovies({ commit }) {
+    fetchSfMovies({ commit, getters }) {
       axios({
         url: drf.movies.genre_recom(878),
         method: 'get',
+        headers: getters.authHeader,
       })
       .then(res => commit('SET_SF_MOVIES', res.data))
       .catch(err => {
