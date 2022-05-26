@@ -1,4 +1,5 @@
 <template>
+
   <!-- <form @submit.prevent="onSubmit">
     <div>
       <label for="title">title: </label>
@@ -48,7 +49,7 @@ import { mapActions } from 'vuex'
       ...mapActions(['updateArticle']),
       onSubmit() {
         const payload = {
-          articlePk: this.article.pk,
+          articlePk: this.article.id,
           ...this.newArticle,
         }
         this.updateArticle(payload)

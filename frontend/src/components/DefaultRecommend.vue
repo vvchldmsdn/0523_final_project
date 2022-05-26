@@ -1,10 +1,9 @@
 <template>
   <div>
-    <h1>Movies</h1>
-    {{ movies }}
-    <v-hover>
-     
-    <template v-slot:default="{ hover }">
+
+   <h1>Movies Recommendation for you!</h1><br>
+    <!-- <h2>based on your ratings :D</h2>   -->
+    평가하신 영화를 기반으로 추천해드립니다
      <v-sheet
       class="mx-auto"
       elevation="0"
@@ -21,6 +20,8 @@
           :key="n"
           v-slot="{ active, toggle }"
         >
+         <v-hover> 
+        <template v-slot:default="{ hover }">
          <v-card
             class="ma-4"
             height="250"
@@ -36,15 +37,14 @@
           >
           <router-link style="text-decoration:none;" :to="{ name: 'movie', params: {moviePk: movies[n].id} }">
               <v-btn>See more info</v-btn>
-          </router-link>
+            </router-link>
           </v-overlay>
-        </v-fade-transition>     
-         </v-img>                       
+        </v-fade-transition> </v-img>                          
             <v-row
               class="fill-height"
               align="center"
               justify="center"
-            >     
+            >  
               <v-scale-transition>
                 <v-icon
                   v-if="active"
@@ -52,14 +52,15 @@
                   size="48"
                   v-text="'mdi-close-circle-outline'"
                 ></v-icon>
-              </v-scale-transition> 
+              </v-scale-transition>
+
             </v-row>
           </v-card>
+        </template>
+      </v-hover>
         </v-slide-item>
       </v-slide-group>
     </v-sheet>
-        </template>
-  </v-hover>
 
     <!-- <span v-for="movie in movies" :key="movie.id">
         <div class="col">

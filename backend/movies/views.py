@@ -27,7 +27,6 @@ def index(request):
 # @authentication_classes([JSONWebTokenAuthentication])
 # @permission_classes([IsAuthenticated])
 def recom(request, movie_pk):
-    print(request.user)
     result = []
     cos_similarities = cos_algorithms.cosine_sim_dict[movie_pk]  # 딕셔너리
     for id in cos_similarities:
@@ -44,7 +43,6 @@ def recom(request, movie_pk):
 # @authentication_classes([JSONWebTokenAuthentication])
 # @permission_classes([IsAuthenticated])
 def genre_recom(request, genre_pk):
-    print(request.user)
     result = []
     weighted_ratings = wr_algorithms.weighted_ratings
 
@@ -67,19 +65,6 @@ def movie_detail(request, movie_pk):
     return Response(serializer.data)
 
 
-# @api_view(['GET'])
-# # @authentication_classes([JSONWebTokenAuthentication])
-# # @permission_classes([IsAuthenticated])
-# def default_recom(request):
-#     result = []
-#     top_twenty = wr_algorithms.weighted_ratings[:20]  # 상위 20개 영화
-#     for id, rating in top_twenty:
-#         tmp_movie = get_object_or_404(Movie, pk=id)
-#         tmp_serializer = MovieSerializer(tmp_movie)
-#         result.append(tmp_serializer.data)
-#     return Response(result)
-
-
 @api_view(['GET'])
 # @authentication_classes([JSONWebTokenAuthentication])
 # @permission_classes([IsAuthenticated])
@@ -98,8 +83,6 @@ def user_interest(request, language_pk):
 # @authentication_classes([JSONWebTokenAuthentication])
 # @permission_classes([IsAuthenticated])
 def create_comment(request, movie_pk):
-    print(request.data)
-    print(request.user)
     user = request.user
     movie = get_object_or_404(Movie, pk=movie_pk)
     serializer = CommentSerializer(data=request.data)
@@ -144,6 +127,8 @@ def comment_update_or_delete(request, movie_pk, comment_pk):
 # @permission_classes([IsAuthenticated])
 def rate_list_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
+    user = request.user
+    tmp = movie.ratings.filter(user_id=user.pk)
 
     def rate_list():
         result = dict()
@@ -169,7 +154,11 @@ def rate_list_create(request, movie_pk):
     if request.method == 'GET':
         return rate_list()
     elif request.method == 'POST':
-        return rate_create()
+        if len(tmp) == 0:
+            return rate_create()
+        elif len(tmp) == 1:
+            tmp.delete()
+            return rate_create()
 
 
 # @api_view(['PUT', 'DELETE'])
@@ -189,7 +178,6 @@ def rated_check(request, movie_pk):  # 영화에 평점 줬으면 True, 아니�
     serializer = RateSerializer(ratings, many=True)
     rating_data = serializer.data
 
-    print(request.user)
     result = {'check': False}
     for info in rating_data:
         if request.user.id == info['user']:

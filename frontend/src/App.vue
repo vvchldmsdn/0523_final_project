@@ -117,12 +117,6 @@ nav a.router-link-exact-active {
   color: white;
 }
 
-@font-face {
-    font-family: 'KOTRA_BOLD-Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.1/KOTRA_BOLD-Bold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
 
 @font-face {
     font-family: 'EliceDigitalBaeum_Bold';
@@ -131,10 +125,26 @@ nav a.router-link-exact-active {
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'EliceDigitalBaeum-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_elice@1.0/EliceDigitalBaeum-Bd.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 h1 {
   text-align: center;
   font-size: 50px;
   font-family: 'EliceDigitalBaeum_Bold'
 }
+
+
 
 </style>

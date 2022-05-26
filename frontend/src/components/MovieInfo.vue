@@ -61,7 +61,7 @@
                     {{ genre.name }} 
                   </v-chip>
                 </span><hr>
-                <!-- <movie-comments id="mov-comments" :movieComments="movie.movie_comments"></movie-comments> -->
+                <movie-comments id="mov-comments" :movieComments="movie.movie_comments"></movie-comments>
               </b-card-text>
             </b-card-body>
           </b-col>
@@ -90,10 +90,11 @@
 </template>
 
 <script>
-// import MovieComments from '@/components/MovieComments.vue'
+import MovieComments from '@/components/MovieComments.vue'
 
 export default {
   name: 'MovieInfo',
+  components: { MovieComments },
   props: {
     movie: Object,
   },

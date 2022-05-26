@@ -2,7 +2,7 @@
   <div>
     <h1>커뮤니티</h1>
     <ul id="commu" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-      <li v-for="article in articles" :key="article.pk">
+      <li v-for="article in articles" :key="article.id">
         <div class="card" style="width: 18rem;">
           <div class="card-body">
             <h5 class="card-title">제목: <router-link style=text-decoration:none; :to="{ name: 'article', params: {articlePk: article.id} }">

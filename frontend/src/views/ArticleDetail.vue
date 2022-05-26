@@ -1,14 +1,16 @@
 <template>
   <div>
     <h1>게시글</h1>
-    {{article}}
+    <!-- {{article}} -->
     <div class="card" id="articlecard">
       <router-link style=text-decoration:none; :to="{ name: 'profile', params: { username } }"><h5 class="card-header">{{ article.user.username }}</h5></router-link>
       <div class="card-body">
-        <h5 class="card-title">{{ article.title }}</h5>
-        <p class="card-text">{{ article.content}}</p>
-        <div>작성시간: {{ article.created_at }}</div>
-        <div>수정시간: {{ article.updated_at }}</div>
+        <h5 id="c-title" class="card-title">{{ article.title }}</h5>
+        <p id="c-content" class="card-text">{{ article.content}}</p>
+        <div>  [작성] {{ article.created_at.slice(2, 10) }} ({{ article.created_at.slice(11, 16) }})</div>
+        <div>  [수정] {{ article.updated_at.slice(2, 10) }} ({{ article.updated_at.slice(11, 16) }})</div>
+        <!-- <div>작성일: {{ article.created_at.slice(0, 10) }} | 작성시각: {{ article.created_at.slice(11, 19) }}</div>
+        <div>수정일: {{ article.updated_at.slice(0, 10) }} | 수정시각: {{ article.updated_at.slice(11, 19) }}</div> -->
       </div>
     </div>
     <!-- <h1>{{ article.title }}</h1>
@@ -99,8 +101,19 @@ export default {
 </script>
 
 <style>
+h5 {
+  text-align: center;
+  font-family: 'EliceDigitalBaeum-Bd'
+}
+
+p {  
+  font-family: 'GmarketSansMedium'
+}
+
 #articlecard {
   width: 1000px; 
   margin: auto;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 </style>

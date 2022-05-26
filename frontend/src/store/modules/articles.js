@@ -65,7 +65,7 @@ export default {
           commit('SET_ARTICLE', res.data)
           router.push({
             name: 'article',
-            params: { articlePk: getters.article.pk }  // 
+            params: { articlePk: getters.article.id }  // 
           })
         })
     },
@@ -80,7 +80,7 @@ export default {
           commit('SET_ARTICLE', res.data)
           router.push({
             name: 'article',
-            params: { articlePk: getters.article.pk }
+            params: { articlePk: getters.article.id }
           })
         })
     },

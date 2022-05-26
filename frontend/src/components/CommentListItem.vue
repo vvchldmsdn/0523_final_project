@@ -5,7 +5,8 @@
     </router-link>
     
     <span id="cont" v-if="!isEditing">{{ payload.content }}</span>
-
+    <span>  [작성] {{ comment.created_at.slice(2, 10) }} ({{ comment.created_at.slice(11, 16) }})</span>
+    <span>  [수정] {{ comment.updated_at.slice(2, 10) }} ({{ comment.updated_at.slice(11, 16) }})</span>
     <span v-if="isEditing">
       <input type="text" v-model="payload.content">
         <v-btn id="btn" x-small @click="onUpdate" color="blue lighten-1" depressed>

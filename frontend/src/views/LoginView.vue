@@ -4,23 +4,18 @@
 
     <account-error-list v-if="authError"></account-error-list>
 
-    <form class="row g-3" @submit.prevent="login(credentials)">
-       <div class="col-auto">
-        userId
-      </div>
-      <p class="col-auto">
-        <label for="username" class="visually-hidden">user ID</label>
+    <form class="form-horizontal" @submit.prevent="login(credentials)" style="display:inline-block;">
+       <div class="form-inline form-group" id="user-id">
+        <!-- <label for="username">user ID</label> -->
         <input v-model="credentials.username" type="text" class="form-control" id="username" placeholder="ID" required>
-      </p>
-      <p class="col-auto">
-        Password
-      </p>
+
       <div class="col-auto">
-        <label for="password" class="visually-hidden">Password</label>
+        <!-- <label for="password">Password</label> -->
         <input v-model="credentials.password" type="password" class="form-control" id="password" placeholder="Password" required>
       </div>
       <div class="col-auto">
         <button type="submit" class="btn btn-primary mb-3">Login</button>
+      </div>
       </div>
     </form>  
     <!-- <form @submit.prevent="login(credentials)">
@@ -66,5 +61,7 @@ export default {
 </script>
 
 <style>
-
+#user-id {
+  margin-top: 20px;
+}
 </style>

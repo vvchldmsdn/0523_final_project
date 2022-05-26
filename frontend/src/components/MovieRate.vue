@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p>평균평점 {{ rate_average.rate_average }}</p>
+    <v-chip class="ma-2" color="primary">평균평점</v-chip>
+    {{ rate_average.rate_average }}
   </div>
 </template>
 
