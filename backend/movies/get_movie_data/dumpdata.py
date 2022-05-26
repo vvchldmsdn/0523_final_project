@@ -26,16 +26,17 @@ collections_result = []
 
 Base_URL = "https://api.themoviedb.org/3"
 path = "/discover/movie"
+path2 = "/movie/popular"
 params = {
     "api_key": 'd1a4feab78e87ac758f0b64d63f14214',
     "language": "ko-KR",
 }
 
-for page in range(1, 31):
+for page in range(1, 2):
     params_tmp = deepcopy(params)
     params_tmp["page"] = page
 
-    response = requests.get(Base_URL + path, params=params_tmp).json()
+    response = requests.get(Base_URL + path2, params=params_tmp).json()
     data = response.get("results")
 
     # 영화 하나 당 정보 찾기 시작 for 문

@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ profile }}
     <h1>{{ profile.username }} 님의 페이지</h1><hr>
     <profile-info></profile-info>
     <user-article-list></user-article-list>

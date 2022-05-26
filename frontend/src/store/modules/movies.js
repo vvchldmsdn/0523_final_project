@@ -203,6 +203,18 @@ export default {
       .catch(err => console.error(err.response))
     },
 
+    deleteMovieRate({ commit, getters }, {moviePk}) {
+      axios({
+        url: drf.movies.movie_rate(moviePk),
+        method: 'delete',
+        headers: getters.authHeader,
+      })
+      .then(res => {
+        commit('SET_MOVIE_RATE', res.data)
+      })
+      .catch(err => console.error(err.response))
+    },
+
     setRateCheck({ commit, getters}, moviePk) {
       axios({
         url: drf.movies.rate_check(moviePk),
@@ -213,6 +225,12 @@ export default {
         commit('SET_RATE_CHECK', res.data)
       })
       .catch(err => {console.error(err.response)})
-    }
+    },
+
+    // setSearch({ commit, getters }) {
+    //   axios({
+        
+    //   })
+    // }
   }
 }

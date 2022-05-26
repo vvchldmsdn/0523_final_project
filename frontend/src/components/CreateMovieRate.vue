@@ -11,10 +11,11 @@
         <label for="rate">rate(1부터 10점까지): </label>
         <input type="number" id="rate" v-model="rate">
         <div v-if="rate_check.check">
-          <button>평점수정</button>
+          <button>평점 수정</button> ||
+          <button @click="onSubmit">평점 삭제</button>
         </div>
         <div v-else>
-          <button>평점등록</button>
+          <button>평점 등록</button>
         </div>
       </form>
     </div>
@@ -48,6 +49,9 @@ export default {
   created() {
     this.setRateCheck(this.movie.id)
   },
+  updated() {
+    this.setRateCheck(this.movie.id)
+  }
 }
 </script>
 

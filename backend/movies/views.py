@@ -122,7 +122,7 @@ def comment_update_or_delete(request, movie_pk, comment_pk):
         return delete_comment()
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'DELETE'])
 # @authentication_classes([JSONWebTokenAuthentication])
 # @permission_classes([IsAuthenticated])
 def rate_list_create(request, movie_pk):
@@ -151,6 +151,12 @@ def rate_list_create(request, movie_pk):
             serializer.save(user=request.user, movie=movie)
             return Response(serializer.data)
 
+    def rate_delete():
+        tmp.delete()
+        ratings = movie.ratings.all()
+        serializer = RateSerializer(ratings, many=True)
+        Response(serializer.data)
+
     if request.method == 'GET':
         return rate_list()
     elif request.method == 'POST':
@@ -159,6 +165,9 @@ def rate_list_create(request, movie_pk):
         elif len(tmp) == 1:
             tmp.delete()
             return rate_create()
+    elif request.method == 'DELETE':
+        if len(tmp) == 1:
+            return rate_delete()
 
 
 # @api_view(['PUT', 'DELETE'])
@@ -249,3 +258,8 @@ def default_recom(request):
             return high_rate_exist()
         else:
             return didnt_rate()
+
+
+# def search(request):
+#     movie = get_list_or_404(Movie)
+#     serializer = MovieSerializer(movie, many=True)
