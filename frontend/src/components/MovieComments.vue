@@ -4,7 +4,7 @@
       <movie-comment
         v-for="movieComment in movieComments"
         :movieComment="movieComment"
-        :key="movieComment.pk"
+        :key="movieComment.id"
       >        
       </movie-comment>
     </ul>

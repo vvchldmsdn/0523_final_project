@@ -20,7 +20,7 @@ export default {
     movies: state => state.movies,
     movie: state => state.movie,
     fantasy_movies: state => state.fantasy_movies,
-    animation_movies: state => state.fantasy_movies,
+    animation_movies: state => state.animation_movies,
     sf_movies: state => state.sf_movies,
     related_movies: state => state.related_movies,
     isAuthor: (state, getters) => {

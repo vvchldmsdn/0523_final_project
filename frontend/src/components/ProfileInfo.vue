@@ -1,8 +1,6 @@
 <template>
   <div>
-    {{ profile.username }}의 정보 <br>
-    - 이메일: <br>
-    - ~~? <br>
+    
   </div>
 </template>
 

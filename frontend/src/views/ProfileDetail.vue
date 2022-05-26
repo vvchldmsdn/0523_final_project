@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ profile.username }}'s 페이지</h1>
+    <h1>{{ profile.username }}님의 페이지</h1><hr>
     <profile-info></profile-info>
     <user-article-list></user-article-list>
     <user-interest></user-interest>
@@ -30,5 +30,7 @@ export default {
 </script>
 
 <style>
-
+div h1 {
+  margin-top: 25px;
+}
 </style>
