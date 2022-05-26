@@ -15,5 +15,9 @@ export default {
     ...mapActions(['fetchProfile'])
   },
 }
-</script>-->
+</script>
+<style>
+
+</style>
+-->
 

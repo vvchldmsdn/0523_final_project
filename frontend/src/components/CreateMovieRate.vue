@@ -1,21 +1,25 @@
 <template>
   <div>
     <div v-if="rate_check.check">
+      <v-chip class="ma-2" color="primary">
       평점 수정
+      </v-chip><br> 
+      
     </div>
     <div v-else>
+      <v-chip class="ma-2" color="primary">
       평점 등록
+      </v-chip><br> 
     </div>
-    <div>
+    <div id="mov-rating">
       <form @submit.prevent="onSubmit">
-        <label for="rate">rate(1부터 10점까지): </label>
-        <input type="number" id="rate" v-model="rate">
+        <label id="rate-label" for="rate"> Your rate (1 ~ 10) </label>
+        <input type="number" id="rate" class="form-control" v-model="rate">
         <div v-if="rate_check.check">
-          <button>평점 수정</button> ||
-          <button @click="onSubmit">평점 삭제</button>
+          <button id="edit-btn" class="btn btn-primary mb-3">edit</button>
         </div>
         <div v-else>
-          <button>평점 등록</button>
+          <button id="submit-btn" class="btn btn-primary mb-3">submit</button>
         </div>
       </form>
     </div>
@@ -49,14 +53,33 @@ export default {
   created() {
     this.setRateCheck(this.movie.id)
   },
-  updated() {
-    this.setRateCheck(this.movie.id)
-  }
 }
 </script>
 
-<style>
+<style type="text/css">
+form{
+  display: flex;
+  margin-bottom: 15px;
+}
 #rate-form {
   margin: auto;
+}
+
+#mov-rating {
+  display: inline-block;
+  text-align: center;
+}
+
+#rate-label {
+  float: left;
+  margin-right: 10px;
+}
+
+#edit-btn {
+  margin-left: 10px;
+}
+
+#submit-btn {
+  margin-left: 10px;
 }
 </style>

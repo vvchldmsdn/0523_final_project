@@ -77,11 +77,6 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  data() {
-    return {
-      search: ''
-    }
-  },
   methods: {
     ...mapActions(['logout'])
   },

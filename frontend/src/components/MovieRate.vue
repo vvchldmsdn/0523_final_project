@@ -28,9 +28,6 @@ export default {
   },
   watch: {
     rate_average () {console.log('shit')}
-  },
-  updated() {
-    this.fetchRate(this.moviePk)
   }
 }
 </script>

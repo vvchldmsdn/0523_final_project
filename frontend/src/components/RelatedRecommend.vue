@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Related Movie Recommendation</h1><br>
-  
      <v-sheet
       class="mx-auto"
       elevation="0"
