@@ -32,5 +32,7 @@ urlpatterns = [
     path('test/', views.test),
 
     path('<int:movie_pk>/rate/check/', views.rated_check),
+
+    # path('default/test/', views.test_default_recom)
 ]
 

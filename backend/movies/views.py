@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from pprint import pprint
-from algorithms import cos_algorithms, wr_algorithms
+from algorithms import cos_algorithms, wr_algorithms, wrcos_algorithms
 
 
 # Create your views here.
@@ -27,6 +27,7 @@ def index(request):
 # @authentication_classes([JSONWebTokenAuthentication])
 # @permission_classes([IsAuthenticated])
 def recom(request, movie_pk):
+    print(request.user)
     result = []
     cos_similarities = cos_algorithms.cosine_sim_dict[movie_pk]  # 딕셔너리
     for id in cos_similarities:
@@ -43,6 +44,7 @@ def recom(request, movie_pk):
 # @authentication_classes([JSONWebTokenAuthentication])
 # @permission_classes([IsAuthenticated])
 def genre_recom(request, genre_pk):
+    print(request.user)
     result = []
     weighted_ratings = wr_algorithms.weighted_ratings
 
@@ -65,17 +67,17 @@ def movie_detail(request, movie_pk):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
-# @authentication_classes([JSONWebTokenAuthentication])
-# @permission_classes([IsAuthenticated])
-def default_recom(request):
-    result = []
-    top_twenty = wr_algorithms.weighted_ratings[:20]  # 상위 20개 영화
-    for id, rating in top_twenty:
-        tmp_movie = get_object_or_404(Movie, pk=id)
-        tmp_serializer = MovieSerializer(tmp_movie)
-        result.append(tmp_serializer.data)
-    return Response(result)
+# @api_view(['GET'])
+# # @authentication_classes([JSONWebTokenAuthentication])
+# # @permission_classes([IsAuthenticated])
+# def default_recom(request):
+#     result = []
+#     top_twenty = wr_algorithms.weighted_ratings[:20]  # 상위 20개 영화
+#     for id, rating in top_twenty:
+#         tmp_movie = get_object_or_404(Movie, pk=id)
+#         tmp_serializer = MovieSerializer(tmp_movie)
+#         result.append(tmp_serializer.data)
+#     return Response(result)
 
 
 @api_view(['GET'])
@@ -182,6 +184,7 @@ def rated_check(request, movie_pk):  # 영화에 평점 줬으면 True, 아니�
     serializer = RateSerializer(ratings, many=True)
     rating_data = serializer.data
 
+    print(request.user)
     result = {'check': False}
     for info in rating_data:
         if request.user.id == info['user']:
@@ -202,3 +205,52 @@ def test(request):
             result['like_movies'].append(info['movie'])
 
     return Response(result)
+
+
+@api_view(['GET'])
+def default_recom(request):
+    print(request.user)
+    ratings = request.user.ratings.all()
+    serializer = RateSerializer(ratings, many=True)
+    print(serializer.data)
+    
+    high_rate_movies = []
+    for info in serializer.data:
+        if info['rates'] >= 8:
+            high_rate_movies.append(info['movie'])
+
+    def high_rate_exist():
+    # 이 다음 wrcos_algorithms.py에 있는 함수에 high_rate_movies를 입력변수로 넘김
+        tmp_result = wrcos_algorithms.wrcos(high_rate_movies)
+
+        tmp_result2 = []
+        for wr in wr_algorithms.weighted_ratings:
+            if wr[0] in tmp_result:
+                tmp_result2.append((wr[0], 20 * tmp_result[wr[0]] + wr[1]))
+        tmp_result2.sort(key= lambda x: x[1], reverse=True)  # 점수 높은거 순으로 (id, 점수)들이 들어있음
+
+        result = []
+        for id, rating in tmp_result2:
+            tmp_movie = get_object_or_404(Movie, pk=id)
+            tmp_serializer = MovieSerializer(tmp_movie)
+            result.append(tmp_serializer.data)
+
+        return Response(result)
+    
+    def didnt_rate():
+        result = []
+        top_twenty = wr_algorithms.weighted_ratings[:20]  # 상위 20개 영화
+        for id, rating in top_twenty:
+            tmp_movie = get_object_or_404(Movie, pk=id)
+            tmp_serializer = MovieSerializer(tmp_movie)
+            result.append(tmp_serializer.data)
+        return Response(result)
+
+
+    if len(serializer.data) == 0:
+        return didnt_rate()
+    else:
+        if len(high_rate_movies) >= 1:
+            return high_rate_exist()
+        else:
+            return didnt_rate()

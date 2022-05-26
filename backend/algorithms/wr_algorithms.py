@@ -41,14 +41,14 @@ for info in movies_data:
     vote_count_arr.append((movie_id, vote_count))
 
 vote_count_arr.sort(key=lambda x: x[1], reverse=True)
-m = vote_count_arr[(num_movies * 2) // 10][1]
+m = vote_count_arr[(num_movies * 5) // 10][1]
 
 c = total_sum_rating / num_movies
 c = round(c, 2)  # 나중에 장르 별 계산 할 때도 계속 쓸꺼임
 
 # vote_count_arr에서 (num_movies * 2) // 10인덱스 밑 부분만 볼꺼임
 weighted_ratings = []
-target_movies = vote_count_arr[:(num_movies * 2) // 10 + 1]
+target_movies = vote_count_arr[:(num_movies * 5) // 10 + 1]
 
 for info in movies_data:
     movie_id = info['id']
