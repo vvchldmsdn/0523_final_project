@@ -86,6 +86,7 @@ export default {
         .then(() => {
           dispatch('removeToken')
           alert('성공적으로 logout')
+          // commit('SET_PROFILE', null)
           router.push({ name: 'login' })
         })
         .error(err => {

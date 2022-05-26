@@ -25,9 +25,9 @@
          <b-nav-item><router-link id="bnav" style=text-decoration:none; :to="{ name: 'articles' }">
           COMMUNITY
         </router-link></b-nav-item>
-        <b-nav-item v-if="isLoggedIn"><router-link id="bnav" style=text-decoration:none; :to="{ name: 'profile', params: {userName: profile.username} }">
+        <b-nav-item v-if="isLoggedIn"><router-link id="bnav" style=text-decoration:none; :to="{ name: 'profile', params: {username: currentUser.username} }">
           MY PAGE
-        </router-link></b-nav-item>
+        </router-link></b-nav-item>  
         <b-nav-item v-if="!isLoggedIn"><router-link id="bnav" style=text-decoration:none; :to="{ name: 'signup' }">
           SIGNUP
         </router-link></b-nav-item>

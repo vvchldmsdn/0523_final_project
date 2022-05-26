@@ -14,13 +14,9 @@ export default {
   methods: {
     ...mapActions(['fetchProfile'])
   },
-  created() {
-    const payload = { username: this.$route.params.username }
-    this.fetchProfile(payload)
-  }
 }
-</script>
+</script>-->
 
 <style>
 
-</style>-->
+</style>

@@ -8,6 +8,7 @@
   import { mapActions, mapGetters } from 'vuex'
 
   export default {
+    name: 'logoutView',
     methods: {
       ...mapActions(['logout'])
     },
